@@ -16,10 +16,11 @@
 LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
 
 const char* host = "joeybabcock.me";
+String username = "djnat";
 const int httpPort = 80;
-char ssid[] = "Bjoeandy_5ghz"; // your network SSID (name)
-char password[] = "02030410"; // your network key
-int api_mtbs = 20000; //mean time between api requests
+char ssid[] = "SSID_HERE"; // your network SSID (name)
+char password[] = "PASSWORD_HERE"; // your network key
+int api_mtbs = 60000; //mean time between api requests
 long api_lasttime;   //last time api request has been done
 long subs = 0;
 
@@ -94,7 +95,7 @@ void getStats() {
     return;
   }
 
-  String url = "/tests/php/whatpulse.php";
+  String url = "/tests/php/whatpulse.php?username="+username;
   Serial.print("Requesting URL: ");
   Serial.println(url);
   // This will send the request to the server
@@ -134,7 +135,10 @@ void getStats() {
     if (root.containsKey("clicks")) {
       String clicks = root["clicks"];
       String keys = root["keys"];
-      String response = "Clicks: "+String(clicks);
+      String username = root["username"];
+      String response = username + " has ";
+      response += clicks + " clicks, and ";
+      response += keys, " keys.";
       ledMatrix.setText(String(response));
     }
     else
