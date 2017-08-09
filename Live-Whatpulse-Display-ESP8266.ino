@@ -19,8 +19,8 @@ const char* host = "joeybabcock.me";
 String username = "djnat";
 const int httpPort = 80;
 char ssid[] = "SSID_HERE"; // your network SSID (name)
-char password[] = "PASSWORD_HERE"; // your network key
-int api_mtbs = 60000; //mean time between api requests
+char password[] = "PASSWORD"; // your network key
+int api_mtbs = 20000; //mean time between api requests
 long api_lasttime;   //last time api request has been done
 long subs = 0;
 
@@ -83,7 +83,7 @@ void scroll()
   ledMatrix.scrollTextLeft();
   ledMatrix.drawText();
   ledMatrix.commit();
-  delay(100);
+  delay(50);
 }
 
 void getStats() {
