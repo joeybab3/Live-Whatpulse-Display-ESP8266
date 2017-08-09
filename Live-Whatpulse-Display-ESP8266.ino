@@ -86,7 +86,8 @@ void scroll()
 }
 
 void getStats() {
-  String line = "";
+  String json;
+  boolean httpBody = false;
   WiFiClient client;
   if (!client.connect(host, httpPort)) {
     Serial.println("Connection to my server failed...");
@@ -108,44 +109,27 @@ void getStats() {
       return;
     }
   }
+  Serial.println("Got the connection, parsing...");
   
-  // Read all the lines of the reply from server and print them to Serial
-  while(client.available()){      
-    String a = "";
-    char c;
-    int ch_count = 0;
-    bool finishedHeaders = false;
-    bool currentLineIsBlank = true;
-    String headers = "";
-    
-    c = client.read();
-    if(!finishedHeaders){
-      if (currentLineIsBlank && c == '\n') {
-        finishedHeaders = true;
+  
+  char c ;
+  int index = 0;
+  Serial.println("[");
+  while (client.available()) 
+  {
+      String line = client.readStringUntil('\r');
+      if (!httpBody && line.charAt(1) == '{') {
+        httpBody = true;
       }
-      else
-      {
-        headers += c;
+      if (httpBody) {
+        json += line;
       }
-    } else {
-      if (ch_count < 512)  {
-        line += c;
-        Serial.print(c);
-        ch_count++;
-      }
-    }
-    if (c == '\n') {
-      currentLineIsBlank = true;
-    }else if (c != '\r') {
-      currentLineIsBlank = false;
-    }
-    break;
   }
-  client.stop();
-
+  Serial.println("]");
+  
   DynamicJsonBuffer jsonBuffer;
-  JsonObject& root = jsonBuffer.parseObject(line);
-  Serial.print(line);
+  JsonObject& root = jsonBuffer.parseObject(json);
+  Serial.print(json);
   if(root.success()) {
     if (root.containsKey("clicks")) {
       String clicks = root["clicks"];
