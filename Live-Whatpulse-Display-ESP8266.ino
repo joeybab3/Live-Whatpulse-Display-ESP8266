@@ -16,11 +16,11 @@
 LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
 
 const char* host = "joeybabcock.me";
-String username = "djnat";
+String username = "joeybab3";
 const int httpPort = 80;
 char ssid[] = "SSID_HERE"; // your network SSID (name)
 char password[] = "PASSWORD"; // your network key
-int api_mtbs = 20000; //mean time between api requests
+int api_mtbs = 60000; //mean time between api requests
 long api_lasttime;   //last time api request has been done
 long subs = 0;
 
