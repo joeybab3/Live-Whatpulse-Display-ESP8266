@@ -18,7 +18,7 @@ LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
 const char* host = "joeybabcock.me";
 String username = "joeybab3";
 const int httpPort = 80;
-char ssid[] = "SSID_HERE"; // your network SSID (name)
+char ssid[] = "WIFI_HERE"; // your network SSID (name)
 char password[] = "PASSWORD"; // your network key
 int api_mtbs = 60000; //mean time between api requests
 long api_lasttime;   //last time api request has been done
@@ -137,8 +137,8 @@ void getStats() {
       String keys = root["keys"];
       String username = root["username"];
       String response = username + " has ";
-      response += clicks + " clicks, and ";
-      response += keys, " keys.";
+      response += clicks + " clicks and ";
+      response += keys + " keys.";
       ledMatrix.setText(String(response));
     }
     else
